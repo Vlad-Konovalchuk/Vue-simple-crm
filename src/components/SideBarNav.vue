@@ -19,9 +19,9 @@
   </b-nav-item>
 </b-nav>
 </b-col>
-<b-col cols="10">
+<!-- <b-col cols="10"> -->
   <router-view/>
-</b-col>
+<!-- </b-col> -->
 </b-row>
 </template>
 

@@ -1,11 +1,13 @@
 <template>
 <div id="login">
+    <form @submit.prevent="onSubmit">
     <div class="login__inputs">
     <h1>Login</h1>
-    <input type="text" class="login__input" name="username" v-model="input.username" placeholder="Username" />
-    <input type="password" class="login__input" name="password" v-model="input.password" placeholder="Password" />
-    <button type="button" class="btn" @click="login()">Login</button>
+    <input type="text" class="login__input" name="username" v-model="username" placeholder="Username" />
+    <input type="password" class="login__input" name="password" v-model="password" placeholder="Password" />
+    <button type="submit" class="btn">Login</button>
     </div>
+    </form>
     </div>
 </template>
 
@@ -15,16 +17,15 @@
     name: 'Login',
     data() {
         return {
-            input: {
                 username: "",
                 password: ""
-            }
+
         }
     },
     methods: {
         login() {
-        if(this.input.username != "" && this.input.password != "") {
-            if(this.input.username == this.$parent.mockAccount.username && this.input.password == this.$parent.mockAccount.password) {
+        if(this.username != "" && this.password != "") {
+            if(this.username == this.$parent.mockAccount.username && this.password == this.$parent.mockAccount.password) {
                 this.$emit("authenticated", true);
                 this.$router.replace({ name: "secure" });
             } else {
@@ -33,9 +34,31 @@
         } else {
             console.log("A username and password must be present");
         }
+    },
+    signIn(){
+        const{username,password}=this;
+        this.$store.dispatch(AUTH_REQUEST,{username,password})
+            .then(()=>{
+                this.$router.push('/')
+            })
+    },
+    // openFbLoginDialog () {
+    //               FB.login(function(response) {
+    //                   console.log(response);
+    //                }, { scope: 'email' })
+    //  },
+    onSubmit () {
+        const formData = {
+        email: this.email,
+        password: this.password,
+        }
+        console.log(formData)
+        this.$store.commit(state.user=this.email)
     }
 }
     }
+
+    
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -70,7 +93,7 @@
         border: 1px solid #253a588f ;
         line-height: 0;
         font-size: 17px;
-        width: 70%;
+        width: 95%;
         display: block;
         padding: 10px 15px;
         border-radius: 60px;

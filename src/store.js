@@ -5,7 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user:'AVlasd'
+    user:'',
+    token:localStorage.getItem('user-token')|| '',
+    status:''
   },
   mutations: {
     signOut(state){
